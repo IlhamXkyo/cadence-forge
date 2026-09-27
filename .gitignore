@@ -1,0 +1,17 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Node & Package Managers
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Antigravity artifacts
+.system_generated/

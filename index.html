@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CadenceForge — Prose Rhythm Sculptor & Anti-Slop Workbench</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+  <div class="app-layout">
+    <!-- Top Header -->
+    <header class="top-nav">
+      <div class="nav-brand">
+        <div class="brand-symbol">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <div class="brand-meta">
+          <span class="brand-title">CadenceForge</span>
+          <span class="brand-version">v1.0 • 2026 Frontier Heuristics</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Preset Selector -->
+        <div class="control-group">
+          <label for="preset-select">Preset:</label>
+          <select id="preset-select" class="select-input">
+            <option value="" disabled selected>Load Benchmark Preset...</option>
+          </select>
+        </div>
+
+        <!-- Language & Tier Controls -->
+        <div class="control-group">
+          <label for="lang-select">Language:</label>
+          <select id="lang-select" class="select-input">
+            <option value="id" selected>Bahasa Indonesia</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+
+        <div class="control-group" id="tier-control-group">
+          <label for="tier-select">Register Tier:</label>
+          <select id="tier-select" class="select-input">
+            <option value="tier1">Tier 1: Formal (Makalah / Laporan)</option>
+            <option value="tier2" selected>Tier 2: Semi-formal (Blog / LinkedIn)</option>
+            <option value="tier3">Tier 3: Informal (Thread / Santai)</option>
+          </select>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="btn btn-ghost" title="Toggle Light/Dark Theme">
+          <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <!-- GitHub Repo Link -->
+        <a href="https://github.com/IlhamXkyo/cadence-forge" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" title="View Source on GitHub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </header>
+
+    <!-- Pacing Strip & Stylometric Telemetry -->
+    <section class="telemetry-bar">
+      <!-- Human Score Card -->
+      <div class="metric-card score-card">
+        <span class="metric-label">Human Authenticity</span>
+        <div class="score-display">
+          <span id="metric-score" class="metric-value">--</span>
+          <span class="score-denom">/100</span>
+        </div>
+        <span id="metric-risk-badge" class="badge badge-clean">Analyzing</span>
+      </div>
+
+      <!-- Burstiness CV -->
+      <div class="metric-card">
+        <span class="metric-label">Burstiness (CV)</span>
+        <div class="metric-display">
+          <span id="metric-cv" class="metric-value">--</span>
+        </div>
+        <span id="metric-cv-tip" class="metric-hint">Target: 0.45 - 0.85</span>
+      </div>
+
+      <!-- Zero-Dash Meter -->
+      <div class="metric-card">
+        <span class="metric-label">Zero-Dash Policy</span>
+        <div class="metric-display">
+          <span id="metric-dash-count" class="metric-value">0</span>
+          <span class="metric-unit">dashes</span>
+        </div>
+        <span id="metric-dash-badge" class="badge badge-clean">Compliant</span>
+      </div>
+
+      <!-- 17-23 Word Cadence Trap -->
+      <div class="metric-card">
+        <span class="metric-label">17-23 Word Traps</span>
+        <div class="metric-display">
+          <span id="metric-trap-count" class="metric-value">0</span>
+          <span class="metric-unit">runs</span>
+        </div>
+        <span id="metric-trap-badge" class="badge badge-clean">Natural Cadence</span>
+      </div>
+
+      <!-- Lexical Richness (TTR) -->
+      <div class="metric-card">
+        <span class="metric-label">Lexical Diversity (TTR)</span>
+        <div class="metric-display">
+          <span id="metric-ttr" class="metric-value">--</span>
+        </div>
+        <span id="metric-hapax" class="metric-hint">0 hapax legomena</span>
+      </div>
+
+      <!-- Sonifier Play Button -->
+      <div class="metric-card action-card">
+        <button id="sonifier-btn" class="btn btn-audio">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span id="sonifier-btn-label">Listen Cadence</span>
+        </button>
+        <span class="metric-hint">Acoustic metronome test</span>
+      </div>
+    </section>
+
+    <!-- Interactive Sentence Waveform Rhythm Visualizer -->
+    <section class="waveform-container">
+      <div class="waveform-header">
+        <div class="waveform-title-group">
+          <span class="section-title">Sentence Rhythm Waveform</span>
+          <span class="section-subtitle">Real-time sentence length distribution. Red bars mark the 17-23 word AI deadband.</span>
+        </div>
+        <div class="waveform-legend">
+          <span class="legend-item"><span class="legend-dot dot-short"></span> Short (&lt;10)</span>
+          <span class="legend-item"><span class="legend-dot dot-normal"></span> Balanced (10-16, 24-27)</span>
+          <span class="legend-item"><span class="legend-dot dot-trap"></span> 17-23 Deadband</span>
+          <span class="legend-item"><span class="legend-dot dot-long"></span> Flowing (&ge;28)</span>
+        </div>
+      </div>
+      <div class="waveform-canvas-wrap">
+        <canvas id="waveform-canvas" height="90"></canvas>
+      </div>
+    </section>
+
+    <!-- Main Dual-Pane Studio -->
+    <main class="workbench-main">
+      <!-- Left Pane: Input Prose -->
+      <div class="editor-pane input-pane">
+        <div class="pane-header">
+          <div class="pane-title-group">
+            <span class="pane-label">Source Prose</span>
+            <span id="input-word-stats" class="pane-stats">0 words • 0 sentences</span>
+          </div>
+          <div class="pane-actions">
+            <button id="clear-input-btn" class="btn btn-sm btn-ghost">Clear</button>
+            <button id="paste-input-btn" class="btn btn-sm btn-ghost">Paste</button>
+          </div>
+        </div>
+        <div class="editor-body">
+          <textarea id="source-editor" placeholder="Paste draft here, or select a preset above to inspect AI slop and test anti-slop transformations..."></textarea>
+        </div>
+      </div>
+
+      <!-- Center Surgery Bar -->
+      <div class="surgery-action-col">
+        <button id="refactor-btn" class="btn btn-primary btn-surgical" title="Execute Multi-Pass Surgery">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+          </svg>
+          <span>Refactor Prose</span>
+        </button>
+        <div class="surgery-toggles">
+          <label class="toggle-control" title="Enforce zero em/en dashes">
+            <input type="checkbox" id="toggle-zero-dash" checked>
+            <span class="toggle-label">Zero-Dash Policy</span>
+          </label>
+          <label class="toggle-control" title="Break Opening-Expansion-Contrast-Resolution DNA">
+            <input type="checkbox" id="toggle-sentence-dna" checked>
+            <span class="toggle-label">Break Sentence DNA</span>
+          </label>
+          <label class="toggle-control" title="Weed out puff words, unbacked intensifiers & empty verbs">
+            <input type="checkbox" id="toggle-puffery" checked>
+            <span class="toggle-label">Weed Fluff Verbs</span>
+          </label>
+          <label class="toggle-control" title="Split run-ons in 17-23 word deadband">
+            <input type="checkbox" id="toggle-cadence" checked>
+            <span class="toggle-label">Sculpt Cadence</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Right Pane: Refactored Authentic Prose -->
+      <div class="editor-pane output-pane">
+        <div class="pane-header">
+          <div class="pane-title-group">
+            <span class="pane-label">Sculpted Authentic Prose</span>
+            <span id="output-word-stats" class="pane-stats">0 words • 0 sentences</span>
+          </div>
+          <div class="pane-actions">
+            <div class="view-switch">
+              <button id="view-clean-btn" class="btn btn-sm btn-ghost active">Clean</button>
+              <button id="view-diff-btn" class="btn btn-sm btn-ghost">Surgical Diff</button>
+            </div>
+            <button id="copy-output-btn" class="btn btn-sm btn-secondary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              Copy
+            </button>
+          </div>
+        </div>
+        <div class="editor-body">
+          <div id="output-diff-view" class="diff-viewer" style="display: none;"></div>
+          <textarea id="output-editor" readonly placeholder="Refactored prose will appear here with zero dashes, enhanced burstiness, and broken AI cliches..."></textarea>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Docked Surgical Review Inspector -->
+    <footer class="docked-inspector">
+      <div class="inspector-header">
+        <div class="inspector-title">
+          <span class="inspector-badge" id="mod-count-badge">0</span>
+          <span>Surgical Interventions Applied</span>
+        </div>
+        <span class="inspector-hint">Click any intervention to review rationale from the 2026 anti-slop specification</span>
+      </div>
+      <div id="inspector-list" class="inspector-list">
+        <div class="inspector-empty">No interventions performed yet. Load a preset or paste prose to begin surgery.</div>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
